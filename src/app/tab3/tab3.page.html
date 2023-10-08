@@ -11,7 +11,16 @@
     <ion-toolbar>
       <ion-title size="large">Tab 3</ion-title>
     </ion-toolbar>
+
+    <!-- <img src="{{imageSource}}" style="width: 400px;"> -->
+
+    <!-- <img [src]="getPhoto()" style="width: 400px;" />
+    <ion-button (clck)="takePicture()">Camera</ion-button> -->
+
   </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <img [src]="getPhoto()" style="width: 400px;" />
+  <ion-button expand="full" (clck)="takePicture()">Camera</ion-button>
+
+  <!-- <app-explore-container name="Tab 3 page"></app-explore-container> -->
 </ion-content>

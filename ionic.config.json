@@ -1,7 +1,8 @@
 {
   "name": "Grupo7",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular",
   "id": "0a1b6d78"
