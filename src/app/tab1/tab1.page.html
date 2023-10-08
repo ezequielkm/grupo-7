@@ -1,24 +1,40 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Seu Passeio
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-button (click)="login()" expand="full">
-    Login with Google
-  </ion-button>
-  <ion-button (click)="logout()" expand="full">
-    Logout
-  </ion-button>
- 
-  <app-explore-container name="Tab 1 page">
-  </app-explore-container>
+<ion-content class="ion-padding" *ngIf="!this.isLoggedIn()">
+  <div class="login-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Acesse sua conta</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-button (click)="login()" expand="full">
+          <ion-icon slot="start" name="logo-google"></ion-icon> Login com o Google
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-content class="ion-padding" *ngIf="this.isLoggedIn()">
+  <div class="profile-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Olá, {{ username }}!</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-img [src]="userphoto" alt="Foto do usuário" id="profile-photo"></ion-img>
+        <ion-button (click)="logout()" expand="full" color="danger">
+          Sair
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

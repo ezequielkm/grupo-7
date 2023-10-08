@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
   private token: string | null = null;
+  private username: string = "";
+  private userphoto: string = "";
 
   constructor() {}
 
@@ -16,6 +18,22 @@ export class AuthService {
 
   getToken() {
     return this.token;
+  }
+
+  setUsername(username: string) {
+    this.username = username;
+  }
+
+  setUserphoto(userphoto: string) {
+    this.userphoto = userphoto;
+  }
+
+  getUsername() {
+    return this.username;
+  }
+
+  getUserphoto() {
+    return this.userphoto;
   }
 
   isLoggedIn() {
