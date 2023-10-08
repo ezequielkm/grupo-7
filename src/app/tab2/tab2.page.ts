@@ -10,26 +10,30 @@ import axios, { AxiosRequestConfig } from 'axios';
 export class Tab2Page {
   private googlePlacesApiUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
 
-  filtroCinemas: boolean = false;
-  filtroParques: boolean = false;
-  filtroRestaurantes: boolean = false;
+  filtroCinemas: boolean = true;
+  filtroParques: boolean = true;
+  filtroRestaurantes: boolean = true;
   
   locais: any = [];
 
   constructor() {}
 
-  ngOnInit() {
-    setInterval(async () => {
-      this.locais = []
-      if(this.filtroCinemas)
-        this.locais = [...this.locais, ...await this.searchPlaces("movie_theater")]
+  async ngOnInit() {
+    this.getAllPlaces()
+    setInterval(async () => await this.getAllPlaces(), 1000);
+  }
 
-      if(this.filtroRestaurantes)
-        this.locais = [...this.locais, ...await this.searchPlaces("restaurant")]
+  async getAllPlaces()
+  {
+    this.locais = []
+    if(this.filtroCinemas)
+      this.locais = [...this.locais, ...await this.searchPlaces("movie_theater")]
 
-      if(this.filtroParques)
-        this.locais = [...this.locais, ...await this.searchPlaces("park")]
-    }, 10000);
+    if(this.filtroRestaurantes)
+      this.locais = [...this.locais, ...await this.searchPlaces("restaurant")]
+
+    if(this.filtroParques)
+      this.locais = [...this.locais, ...await this.searchPlaces("park")]
   }
 
   get locaisFiltrados() {
@@ -40,20 +44,9 @@ export class Tab2Page {
     try {
       const coordinates: any = await this.obterLocalizacaoUsuario()
 
-      const request: AxiosRequestConfig  = {
-        headers: {
-          'Origin': 'http://localhost:8100',
-        },
-        params:
-        {
-          location: `${coordinates.latitude}, ${coordinates.longitude}`,
-          radius: '1000',
-          type: type,
-          key: 'AIzaSyB1M3F4Xo7rylN_9hcyAAuABSVVb5VSiOE'
-        }
-      };
+      const URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates.latitude},${coordinates.longitude}&radius=1000&type=${type}&key=AIzaSyB1M3F4Xo7rylN_9hcyAAuABSVVb5VSiOE`
   
-      return (await axios.get(`https://cors-anywhere.herokuapp.com/${this.googlePlacesApiUrl}`, request)).data.results;
+      return (await axios.get(`https://corsproxy.io/?${URL}`)).data.results;
     } catch (error) {
       return error
     }
