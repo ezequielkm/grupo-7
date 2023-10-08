@@ -20,14 +20,15 @@ export class Tab2Page {
 
   ngOnInit() {
     setInterval(async () => {
+      this.locais = []
       if(this.filtroCinemas)
-      this.locais = [...this.locais, ...await this.searchPlaces("movie_theater")]
+        this.locais = [...this.locais, ...await this.searchPlaces("movie_theater")]
 
       if(this.filtroCinemas)
-      this.locais = [...this.locais, ...await this.searchPlaces("restaurant")]
+        this.locais = [...this.locais, ...await this.searchPlaces("restaurant")]
 
       if(this.filtroCinemas)
-      this.locais = [...this.locais, ...await this.searchPlaces("park")]
+        this.locais = [...this.locais, ...await this.searchPlaces("park")]
     }, 10000);
   }
 
