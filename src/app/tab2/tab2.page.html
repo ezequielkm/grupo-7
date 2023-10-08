@@ -24,11 +24,11 @@
 
   <ion-card *ngFor="let local of locaisFiltrados">
     <ion-card-header>
-      {{ local.nome }}
+      {{ local.name }}
     </ion-card-header>
     <ion-card-content>
-      <p>Endereço: {{ local.endereco }}</p>
-      <a [href]="local.linkGoogleMaps" target="_blank">Google Maps</a>
+      <p>Endereço: {{ local.vicinity }}</p>
+      <a [href]="'https://www.google.com/maps/place/' + local.place_id" target="_blank">Google Maps</a>
     </ion-card-content>
   </ion-card>
 </ion-content>

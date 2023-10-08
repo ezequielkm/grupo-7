@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Geolocation } from '@capacitor/geolocation';
+import axios, { AxiosRequestConfig } from 'axios';
 
 @Component({
   selector: 'app-tab2',
@@ -6,41 +8,63 @@ import { Component } from '@angular/core';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-  filtroRestaurantes: boolean = false;
+  private googlePlacesApiUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+
   filtroCinemas: boolean = false;
   filtroParques: boolean = false;
+  filtroRestaurantes: boolean = false;
   
+  locais: any = [];
+
   constructor() {}
 
-  locais = [
-    {
-      nome: 'Restaurante A',
-      tipo: 'Restaurante',
-      endereco: 'Endereço do Restaurante A',
-      linkGoogleMaps: 'https://maps.google.com/?q=Restaurante+A',
-    },
-    {
-      nome: 'Cinema B',
-      tipo: 'Cinema',
-      endereco: 'Endereço do Cinema B',
-      linkGoogleMaps: 'https://maps.google.com/?q=Cinema+B',
-    },
-    {
-      nome: 'Parque C',
-      tipo: 'Parque',
-      endereco: 'Endereço do Parque C',
-      linkGoogleMaps: 'https://maps.google.com/?q=Parque+C',
-    },
-    // Adicione mais locais aqui
-  ];
+  ngOnInit() {
+    setInterval(async () => {
+      if(this.filtroCinemas)
+      this.locais = [...this.locais, ...await this.searchPlaces("movie_theater")]
+
+      if(this.filtroCinemas)
+      this.locais = [...this.locais, ...await this.searchPlaces("restaurant")]
+
+      if(this.filtroCinemas)
+      this.locais = [...this.locais, ...await this.searchPlaces("park")]
+    }, 10000);
+  }
 
   get locaisFiltrados() {
-    return this.locais.filter((local) => {
-      return (
-        (!this.filtroRestaurantes || local.tipo === 'Restaurante') &&
-        (!this.filtroCinemas || local.tipo === 'Cinema') &&
-        (!this.filtroParques || local.tipo === 'Parque')
-      );
-    });
+    return this.locais
   }
+
+  async searchPlaces(type: string) {
+    try {
+      const coordinates: any = await this.obterLocalizacaoUsuario()
+
+      const request: AxiosRequestConfig  = {
+        headers: {
+          'Origin': 'http://localhost:8100',
+        },
+        params:
+        {
+          location: `${coordinates.latitude}, ${coordinates.longitude}`,
+          radius: '100',
+          type: type,
+          key: 'AIzaSyB1M3F4Xo7rylN_9hcyAAuABSVVb5VSiOE'
+        }
+      };
+  
+      return (await axios.get(`https://cors-anywhere.herokuapp.com/${this.googlePlacesApiUrl}`, request)).data.results;
+    } catch (error) {
+      console.log(error)
+      return error
+    }
+  }
+
+  async obterLocalizacaoUsuario() {
+    try {
+      const coordinates = await Geolocation.getCurrentPosition();
+      return {latitude: coordinates.coords.latitude, longitude: coordinates.coords.longitude}
+    } catch (error) {
+      return error
+    }
+  }  
 }
