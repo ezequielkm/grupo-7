@@ -27,8 +27,9 @@
       {{ local.name }}
     </ion-card-header>
     <ion-card-content>
+      <img src="{{ local.icon }}" alt="Imagem do Restaurante">
       <p>Endereço: {{ local.vicinity }}</p>
-      <a [href]="'https://www.google.com/maps/place/' + local.place_id" target="_blank">Google Maps</a>
+      <a [href]="'https://www.google.com/maps/place/?q=place_id:' + local.place_id" target="_blank">Google Maps</a>
     </ion-card-content>
   </ion-card>
 </ion-content>
