@@ -5,3 +5,30 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Filtro para Restaurantes</ion-label>
+      <ion-toggle [(ngModel)]="filtroRestaurantes"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Filtro para Cinemas</ion-label>
+      <ion-toggle [(ngModel)]="filtroCinemas"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Filtro para Parques</ion-label>
+      <ion-toggle [(ngModel)]="filtroParques"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <ion-card *ngFor="let local of locaisFiltrados">
+    <ion-card-header>
+      {{ local.nome }}
+    </ion-card-header>
+    <ion-card-content>
+      <p>Endereço: {{ local.endereco }}</p>
+      <a [href]="local.linkGoogleMaps" target="_blank">Google Maps</a>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
