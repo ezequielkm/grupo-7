@@ -54,7 +54,6 @@ export class Tab2Page {
   
       return (await axios.get(`https://cors-anywhere.herokuapp.com/${this.googlePlacesApiUrl}`, request)).data.results;
     } catch (error) {
-      console.log(error)
       return error
     }
   }

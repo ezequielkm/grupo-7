@@ -20,7 +20,6 @@ export class Tab1Page {
       const result = await GoogleAuth.signIn();
 
       if (result && result.authentication) {
-        console.log(result)
         this.authService.setToken(result.authentication.accessToken);
         this.authService.setUsername(`${result.givenName} ${result.familyName}`);
         this.authService.setUserphoto(result.imageUrl);
