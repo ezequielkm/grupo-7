@@ -24,10 +24,10 @@ export class Tab2Page {
       if(this.filtroCinemas)
         this.locais = [...this.locais, ...await this.searchPlaces("movie_theater")]
 
-      if(this.filtroCinemas)
+      if(this.filtroRestaurantes)
         this.locais = [...this.locais, ...await this.searchPlaces("restaurant")]
 
-      if(this.filtroCinemas)
+      if(this.filtroParques)
         this.locais = [...this.locais, ...await this.searchPlaces("park")]
     }, 10000);
   }
