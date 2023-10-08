@@ -9,6 +9,8 @@ import { LogoutComponent } from '../authentication/logout.component';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  username: string = "";
+  userphoto: string = "";
 
   constructor(private authService: AuthService) { }
 
@@ -18,10 +20,10 @@ export class Tab1Page {
       const result = await GoogleAuth.signIn();
 
       if (result && result.authentication) {
-        console.log('Google login success', result);
+        console.log(result)
         this.authService.setToken(result.authentication.accessToken);
-
-        // You can now handle the user's login information (result) as needed.
+        this.authService.setUsername(`${result.givenName} ${result.familyName}`);
+        this.authService.setUserphoto(result.imageUrl);
       } else {
         console.error('Google login failed');
       }
@@ -35,4 +37,10 @@ export class Tab1Page {
     this.authService.logout();
   }
 
+  isLoggedIn()
+  {
+    this.username = this.authService.getUsername()
+    this.userphoto = this.authService.getUserphoto()
+    return this.authService.isLoggedIn()
+  }
 }
