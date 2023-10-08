@@ -47,7 +47,7 @@ export class Tab2Page {
         params:
         {
           location: `${coordinates.latitude}, ${coordinates.longitude}`,
-          radius: '100',
+          radius: '1000',
           type: type,
           key: 'AIzaSyB1M3F4Xo7rylN_9hcyAAuABSVVb5VSiOE'
         }
