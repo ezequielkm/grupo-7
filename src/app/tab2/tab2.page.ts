@@ -20,7 +20,7 @@ export class Tab2Page {
 
   async ngOnInit() {
     this.getAllPlaces()
-    setInterval(async () => await this.getAllPlaces(), 1000);
+    setInterval(async () => await this.getAllPlaces(), 10000);
   }
 
   async getAllPlaces()
